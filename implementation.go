@@ -5,7 +5,6 @@ import "fmt"
 // TODO: document this function.
 // PostfixToInfix returns postfix expression converted into infix expression
 func PostfixToInfix(expression string) (string, error) {
-
 	// Стек для збереження проміжних результатів
 	stack := []string{}
 
@@ -14,18 +13,14 @@ func PostfixToInfix(expression string) (string, error) {
 		// Якщо символ - це операція, видаляємо два останніх операнди зі стеку, формуємо інфіксний вираз
 		if isOperator(string(char)) {
 			if len(stack) < 2 {
-				return "", fmt.Errorf("invalid expression: there are not enough operands for the operation")
+				return "", fmt.Errorf("неправильний вираз: не вистачає операндів для операції")
 			}
 			operand2 := stack[len(stack)-1]
 			stack = stack[:len(stack)-1]
 			operand1 := stack[len(stack)-1]
 			stack = stack[:len(stack)-1]
 
-			// Перевірка на пріоритет операцій
-			infixExpression := fmt.Sprintf("%s %s %s", operand1, string(char), operand2)
-			if needsParentheses(string(char)) {
-				infixExpression = fmt.Sprintf("(%s)", infixExpression)
-			}
+			infixExpression := fmt.Sprintf("(%s %s %s)", operand1, string(char), operand2)
 			stack = append(stack, infixExpression)
 		} else if string(char) != " " { // Пропускаємо пробіл
 			// Якщо символ - це операнд, просто додаємо його до стеку
@@ -35,17 +30,10 @@ func PostfixToInfix(expression string) (string, error) {
 
 	// Перевірка на кінцевий результат та наявність лишніх операндів
 	if len(stack) != 1 {
-		return "", fmt.Errorf("incorrect expression: extra operands")
+		return "", fmt.Errorf("неправильний вираз: лишні операнди")
 	}
 
 	return stack[0], nil
-}
-
-// needsParentheses determines if parentheses are needed around an operator.
-// It returns true if the operator is either "+" or "-".
-// Otherwise, it returns false.
-func needsParentheses(operator string) bool {
-	return operator == "+" || operator == "-"
 }
 
 // isOperator return true if input symbol is operator (+, -, *, /, ^) and return false otherwise

@@ -2,9 +2,9 @@ name: GH tests
 
 on:
   push:
-    branches: [ master, Danil, stas ]
+    branches: [ master, Daniil, stas ]
   pull_request:
-    branches: [ master, Danil, stas ]
+    branches: [ master, Daniil, stas ]
 
 jobs:
   build:

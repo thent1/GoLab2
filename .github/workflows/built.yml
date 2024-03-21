@@ -1,10 +1,10 @@
-name: Test GH actions for "stas" branch
+name: GH tests
 
 on:
   push:
-    branches: [ stas ]
+    branches: [ master, Danil, stas ]
   pull_request:
-    branches: [ stas ]
+    branches: [ master, Danil, stas ]
 
 jobs:
   build:

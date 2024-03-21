@@ -11,8 +11,7 @@ import (
 )
 
 var (
-	inputExpression = flag.String("e", "", "Expression to compute")
-	// TODO: Add other flags support for input and output configuration.
+	inputExpression  = flag.String("e", "", "Expression to compute")
 	fileExpression   = flag.String("f", "", "File with expression")
 	outputExpression = flag.String("o", "", "File for result writing (unnecessary)")
 )

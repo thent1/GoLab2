@@ -78,9 +78,7 @@ func TestPostfixToInfix(t *testing.T) {
 	}
 }
 
-// ExamplePostfixToInfix is a function that illustrating using of function PostfixToInfix
 func ExamplePostfixToInfix() {
 	res, _ := PostfixToInfix("4 2 - 3 * 5 +")
 	fmt.Println(res)
-	// Output: (((4 - 2) * 3) + 5)
 }

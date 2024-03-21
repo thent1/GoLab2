@@ -8,7 +8,7 @@ import (
 
 // isOperator проверяет, является ли символ оператором
 func isOperator(c string) bool {
-	return strings.ContainsAny(c, "+-*/^")
+	return len(c) == 1 && strings.ContainsAny(c, "+-*/^")
 }
 
 // isValidOperand проверяет, является ли строка допустимым операндом (числом)
@@ -24,22 +24,25 @@ func PostfixToInfix(expression string) (string, error) {
 
 	for _, token := range tokens {
 		if isOperator(token) || isValidOperand(token) {
-			if isOperator(token) {
-				if len(stack) < 2 {
-					return "", fmt.Errorf("неправильный ввод: недостаточно операндов для оператора")
-				}
-				operand2 := stack[len(stack)-1]
-				stack = stack[:len(stack)-1]
-				operand1 := stack[len(stack)-1]
-				stack = stack[:len(stack)-1]
+			continue
+		}
+		return "", fmt.Errorf("неправильный ввод: недопустимый символ %s", token)
+	}
 
-				infixExpression := fmt.Sprintf("(%s %s %s)", operand1, token, operand2)
-				stack = append(stack, infixExpression)
-			} else {
-				stack = append(stack, token)
+	for _, token := range tokens {
+		if isOperator(token) {
+			if len(stack) < 2 {
+				return "", fmt.Errorf("неправильный ввод: недостаточно операндов для оператора")
 			}
+			operand2 := stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+			operand1 := stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+
+			infixExpression := fmt.Sprintf("(%s %s %s)", operand1, token, operand2)
+			stack = append(stack, infixExpression)
 		} else {
-			return "", fmt.Errorf("неправильный ввод: недопустимый символ %s", token)
+			stack = append(stack, token)
 		}
 	}
 

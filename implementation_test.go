@@ -33,8 +33,8 @@ func TestPostfixToInfix(t *testing.T) {
 			wantErr:  true,
 		},
 		{
-			name:     "Valid Expression",
-			input:    "!",
+			name:     "Invalid Expression",
+			input:    " ",
 			expected: "",
 			wantErr:  true,
 		},

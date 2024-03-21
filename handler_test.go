@@ -18,7 +18,7 @@ func TestComputeHandler(t *testing.T) {
 		{
 			name:     "Valid Expression",
 			input:    "42 1 -",
-			expected: "42 1 -\n",
+			expected: "(42 - 1)\n",
 			wantErr:  false,
 		},
 		{

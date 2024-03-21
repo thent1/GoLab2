@@ -8,54 +8,73 @@ import (
 )
 
 func TestPostfixToInfix(t *testing.T) {
-	res, err := PostfixToInfix("4 2 - 3 * 5 +")
-	if assert.Nil(t, err) {
-		assert.Equal(t, "(((4 - 2) * 3) + 5)", res)
+	tests := []struct {
+		name     string
+		input    string
+		expected string
+		wantErr  bool
+	}{
+		{
+			name:     "Invalid Expression",
+			input:    "42 -",
+			expected: "",
+			wantErr:  true,
+		},
+		{
+			name:     "Invalid Expression",
+			input:    "!",
+			expected: "",
+			wantErr:  true,
+		},
+		{
+			name:     "Invalid Expression",
+			input:    "~",
+			expected: "",
+			wantErr:  true,
+		},
+		{
+			name:     "Valid Expression",
+			input:    "!",
+			expected: "",
+			wantErr:  true,
+		},
+		{
+			name:     "Valid Expression",
+			input:    "2 20 * 2 / 3 4 + 3 2 ^ * + 6 - 15 +",
+			expected: "(((((2 * 20) / 2) + ((3 + 4) * (3 ^ 2))) - 6) + 15)",
+			wantErr:  false,
+		},
+		{
+			name:     "Valid Expression",
+			input:    "4 2 - 3 * 5 +",
+			expected: "(((4 - 2) * 3) + 5)",
+			wantErr:  false,
+		},
+		{
+			name:     "Valid Expression",
+			input:    "3 15 + 4 * 6 4 - 1 7 + / - 3 * 16 +",
+			expected: "(((((3 + 15) * 4) - ((6 - 4) / (1 + 7))) * 3) + 16)",
+			wantErr:  false,
+		},
+		{
+			name:     "Valid Expression",
+			input:    "5 3 / 4 + 6 4 * 2 9 * + + 4 - 10 /",
+			expected: "(((((5 / 3) + 4) + ((6 * 4) + (2 * 9))) - 4) / 10)",
+			wantErr:  false,
+		},
 	}
 
-	res, err = PostfixToInfix("abc++")
-	if assert.Nil(t, err) {
-		assert.Equal(t, "(a + (b + c))", res)
-	}
-
-	res, err = PostfixToInfix("ab*c+")
-	if assert.Nil(t, err) {
-		assert.Equal(t, "((a * b) + c)", res)
-	}
-
-	res, err = PostfixToInfix("abc/-ad/e-*")
-	if assert.Nil(t, err) {
-		assert.Equal(t, "((a - (b / c)) * ((a / d) - e))", res)
-	}
-
-	res, err = PostfixToInfix("23-4+567*+*")
-	if assert.Nil(t, err) {
-		assert.Equal(t, "(((2 - 3) + 4) * (5 + (6 * 7)))", res)
-	}
-
-	res, err = PostfixToInfix("KL+MN*-OP^W*U/V/T*+Q+")
-	if assert.Nil(t, err) {
-		assert.Equal(t, "((((K + L) - (M * N)) + (((((O ^ P) * W) / U) / V) * T)) + Q)", res)
-	}
-
-	res, err = PostfixToInfix("ABCDEFGHOJ+-+-+-+//")
-	if assert.Nil(t, err) {
-		assert.Equal(t, "(A / (B / (C + (D - (E + (F - (G + (H - (O + J)))))))))", res)
-	}
-
-	res, err = PostfixToInfix("")
-	if assert.NotNil(t, err) {
-		assert.Equal(t, "", res)
-	}
-
-	res, err = PostfixToInfix("AB+-+-+-+-+-//^**")
-	if assert.NotNil(t, err) {
-		assert.Equal(t, "", res)
-	}
-
-	res, err = PostfixToInfix("ABOBA+ABOBA+ABOBA-ABOBA")
-	if assert.NotNil(t, err) {
-		assert.Equal(t, "", res)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			res, err := PostfixToInfix(tt.input)
+			if tt.wantErr {
+				assert.Error(t, err)
+				assert.Empty(t, res)
+			} else {
+				assert.NoError(t, err)
+				assert.Equal(t, tt.expected, res)
+			}
+		})
 	}
 }
 

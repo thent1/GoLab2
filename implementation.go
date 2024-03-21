@@ -49,7 +49,7 @@ func (s *Stack) IsEmpty() bool {
 func PostfixToInfix(input string) (string, error) {
 
 	if input == "" {
-		return "", fmt.Errorf("Wrong expression, too many operands")
+		return "", fmt.Errorf("Wrong expression, no input")
 	}
 
 	stack := Stack{}

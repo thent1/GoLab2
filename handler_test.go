@@ -27,6 +27,54 @@ func TestComputeHandler(t *testing.T) {
 			expected: "",
 			wantErr:  true,
 		},
+		{
+			name:     "Valid Expression",
+			input:    "5 5 +",
+			expected: "(5 + 5)\n",
+			wantErr:  false,
+		},
+		{
+			name:     "Invalid Expression",
+			input:    "-",
+			expected: "",
+			wantErr:  true,
+		},
+		{
+			name:     "Valid Expression",
+			input:    "3 4 * 5 +",
+			expected: "((3 * 4) + 5)\n",
+			wantErr:  false,
+		},
+		{
+			name:     "Invalid Expression",
+			input:    "1+",
+			expected: "",
+			wantErr:  true,
+		},
+		{
+			name:     "Valid Expression",
+			input:    "3 4 + 5 2 - *",
+			expected: "((3 + 4) * (5 - 2))\n",
+			wantErr:  false,
+		},
+		{
+			name:     "Invalid Expression",
+			input:    "a +",
+			expected: "",
+			wantErr:  true,
+		},
+		{
+			name:     "Valid Expression",
+			input:    "5 6 ^",
+			expected: "(5 ^ 6)\n",
+			wantErr:  false,
+		},
+		{
+			name:     "Valid Expression",
+			input:    "5 3 ^ 4 2 * - 6 1 + /",
+			expected: "(((5 ^ 3) - (4 * 2)) / (6 + 1))\n",
+			wantErr:  false,
+		},
 	}
 
 	for _, tt := range tests {

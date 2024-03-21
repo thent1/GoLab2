@@ -73,6 +73,7 @@ func PostfixToInfix(input string) (string, error) {
 
 			} else {
 				return "", fmt.Errorf("Not enough operands in expression")
+
 			}
 
 		} else {
@@ -104,6 +105,7 @@ func isValidOperand(c string) bool {
 		if (r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z') {
 			return true
 		}
+
 	}
 
 	return false

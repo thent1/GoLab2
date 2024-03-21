@@ -62,6 +62,12 @@ func TestPostfixToInfix(t *testing.T) {
 			expected: "(((((5 / 3) + 4) + ((6 * 4) + (2 * 9))) - 4) / 10)",
 			wantErr:  false,
 		},
+		{
+			name:     "Expression with empty string",
+			input:    "",
+			expected: "",
+			wantErr:  true,
+		},
 	}
 
 	for _, tt := range tests {
